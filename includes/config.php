@@ -1,6 +1,24 @@
 <?php
 //config.php
 
+define('DEBUG',TRUE); #we want to see all errors
+
+date_default_timezone_set('America/Los_Angeles'); #sets default date/timezone for this website
+
+include 'credentials.php'; //stores database login info
+include 'common.php'; //stores all unsightly application functions, etc.
+include 'MyAutoLoader.php'; //loads class that autoloads all classes in include folder
+
+/* use the following path settings for placing all code in one application folder */ 
+define('VIRTUAL_PATH', 'http://rattananeak.com/retro/'); # Virtual (web) 'root' of application for images, JS & CSS files
+
+define('PHYSICAL_PATH', '/home/rattananeak.com/retro/'); # Physical (PHP) 'root' of application for file & upload reference
+
+define('INCLUDE_PATH', PHYSICAL_PATH . 'includes/'); # Path to PHP include files - INSIDE APPLICATION ROOT
+
+ob_start();  #buffers our page to be prevent header errors. Call before INC files or ANY html!
+header("Cache-Control: no-cache");header("Expires: -1");#Helps stop browser & proxy caching
+
 //echo basename($_SERVER['PHP_SELF']);
 
 //the constant THIS_PAGE identifies the current file name
@@ -37,15 +55,28 @@ switch(THIS_PAGE)
 		$pageID = 'Contact us';
 		$img = 'contact.jpg';
 		break;
-			
+        
+    case 'compound.php':
+		$title = 'Compound Page';
+		$pageID = 'Contact us';
+		$img = 'contact.jpg';
+		break;
+    case 'customers.php':
+		$title = 'title for customers page!';
+		$pageID = 'Customers';
+		
+		break;
+        
     default:
         $title = THIS_PAGE;
         $pageID = 'Welcome to the Retro Diner';
+        
 }//end switch
 
 $nav1['index.php'] = 'Home';
 //$nav1['template.php'] = 'Template';
 $nav1['daily.php'] = 'Daily';
+$nav1['customers.php'] = 'Customers';
 $nav1['contact.php'] = 'Contact';
 $nav1['aboutus.php'] = 'About us';
 /*
@@ -147,17 +178,13 @@ function safeEmail($to, $subject, $message, $replyTo = '',$contentType='text')
 
 }//end safeEmail()
 
-
 /*
     The function below loops through the entire POST data and creating a single string of name/value pairs to send.  When we do this, we can now add elements and not need to address them in the formhandler!
-
     There is also a bit of code that replaces any underscores with spaces.  This is useful because we can name our POST variables in such a way that makes it easier for the client to view our emails.
-
     $to = 'xxx@example.com';
     $message = process_post();
     $replyTo = $_POST['Email'];
     $subject = 'Test from contact form';
-    
     safeEmail($to, $subject, $message, $replyTo);
 
 */
