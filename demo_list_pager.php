@@ -59,10 +59,10 @@ if(mysqli_num_rows($result) > 0)
             </p>';
 	}
 	//the showNAV() method defaults to a div, which blows up in our design
-    echo $myPager->showNAV();//show pager if enough records 
+    //echo $myPager->showNAV();//show pager if enough records 
     
     //the version below adds the optional bookends to remove the div design problem
-    //echo $myPager->showNAV('<p align="center">','</p>');
+    echo $myPager->showNAV('<p align="center">','</p>');
 }else{#no records
     echo "<p align=center>What! No Customers?  There must be a mistake!!</p>";	
 }
